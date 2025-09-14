@@ -13,4 +13,17 @@ function drawCells(cells = 16) {
   }
 }
 
+function paintCell(e) {
+  e.target.style.backgroundColor = "lightblue";
+}
+
+let isMouseDown = false;
+
+pad.addEventListener("mousedown", () => (isMouseDown = true));
+pad.addEventListener("mouseup", () => (isMouseDown = false));
+
+pad.addEventListener("mouseover", (e) => {
+  if (isMouseDown) paintCell(e);
+});
+
 drawCells();
