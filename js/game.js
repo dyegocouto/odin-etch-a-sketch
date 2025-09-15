@@ -17,7 +17,9 @@ function drawCells(cells = 16) {
 }
 
 function paintCell(e) {
-  e.target.style.backgroundColor = "lightblue";
+  if (e.target.classList.contains("cell")) {
+    e.target.style.backgroundColor = "lightblue";
+  }
 }
 
 function getPadSize() {
