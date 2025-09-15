@@ -1,6 +1,9 @@
 const pad = document.querySelector(".pad");
+const padButton = document.querySelector(".pad-button");
 
 function drawCells(cells = 16) {
+  pad.textContent = "";
+
   const totalCells = cells * cells;
   const cellSize = 100 / cells;
 
@@ -17,6 +20,10 @@ function paintCell(e) {
   e.target.style.backgroundColor = "lightblue";
 }
 
+function getPadSize() {
+  return +prompt("What size you want the sketch pad to be?");
+}
+
 let isMouseDown = false;
 
 pad.addEventListener("mousedown", () => (isMouseDown = true));
@@ -25,5 +32,7 @@ pad.addEventListener("mouseup", () => (isMouseDown = false));
 pad.addEventListener("mouseover", (e) => {
   if (isMouseDown) paintCell(e);
 });
+
+padButton.addEventListener("click", () => drawCells(getPadSize()));
 
 drawCells();
