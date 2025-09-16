@@ -25,7 +25,7 @@ function paintCell(e) {
 function getPadSize() {
   let padSize;
   do {
-    padSize = +prompt("What size you want the sketch pad to be? Max: 100x100");
+    padSize = +prompt("Choose a new grid size. Something between 1 and 100.");
   } while (isNaN(padSize) || padSize > 100 || padSize < 1);
 
   return padSize;
