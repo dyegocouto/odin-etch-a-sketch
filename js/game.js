@@ -1,5 +1,5 @@
 const pad = document.querySelector(".pad");
-const padButton = document.querySelector(".pad-button");
+const createButton = document.querySelector(".create-button");
 
 function drawCells(cells = 16) {
   pad.textContent = "";
@@ -40,6 +40,6 @@ pad.addEventListener("mouseover", (e) => {
   if (isMouseDown) paintCell(e);
 });
 
-padButton.addEventListener("click", () => drawCells(getPadSize()));
+createButton.addEventListener("click", () => drawCells(getPadSize()));
 
 drawCells();
