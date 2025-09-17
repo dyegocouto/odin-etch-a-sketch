@@ -1,5 +1,6 @@
 const pad = document.querySelector(".pad");
 const createButton = document.querySelector(".create-button");
+const colorCheckbox = document.querySelector(".color-checkbox");
 
 function drawCells(cells = 16) {
   pad.textContent = "";
@@ -16,9 +17,18 @@ function drawCells(cells = 16) {
   }
 }
 
+function getRandomRGB() {
+  const r = Math.floor(Math.random() * 256);
+  const g = Math.floor(Math.random() * 256);
+  const b = Math.floor(Math.random() * 256);
+  return `rgb(${r}, ${g}, ${b})`;
+}
+
 function paintCell(e) {
-  if (e.target.classList.contains("cell")) {
-    e.target.style.backgroundColor = "lightblue";
+  if (colorCheckbox.checked) {
+    e.target.style.backgroundColor = getRandomRGB();
+  } else {
+    e.target.style.backgroundColor = "lightgray";
   }
 }
 
@@ -37,7 +47,7 @@ pad.addEventListener("mousedown", () => (isMouseDown = true));
 pad.addEventListener("mouseup", () => (isMouseDown = false));
 
 pad.addEventListener("mouseover", (e) => {
-  if (isMouseDown) paintCell(e);
+  if (isMouseDown && e.target.classList.contains("cell")) paintCell(e);
 });
 
 createButton.addEventListener("click", () => drawCells(getPadSize()));
