@@ -1,6 +1,7 @@
 const pad = document.querySelector(".pad");
 const createButton = document.querySelector(".create-button");
 const colorCheckbox = document.querySelector(".color-checkbox");
+const clearButton = document.querySelector(".clear-button");
 
 function drawCells(cells = 16) {
   pad.textContent = "";
@@ -51,5 +52,10 @@ pad.addEventListener("mouseover", (e) => {
 });
 
 createButton.addEventListener("click", () => drawCells(getPadSize()));
+
+clearButton.addEventListener("click", () => {
+  const currentCells = Math.sqrt(pad.children.length);
+  drawCells(currentCells);
+});
 
 drawCells();
