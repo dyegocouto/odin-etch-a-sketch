@@ -1,21 +1,30 @@
 const pad = document.querySelector(".pad");
 const createButton = document.querySelector(".create-button");
-const colorCheckbox = document.querySelector(".color-checkbox");
 const clearButton = document.querySelector(".clear-button");
+const colorCheckbox = document.querySelector(".color-checkbox");
 
-function drawCells(cells = 16) {
-  pad.textContent = "";
+function createCell(fraction) {
+  const cellSize = 100 / fraction;
 
-  const totalCells = cells * cells;
-  const cellSize = 100 / cells;
+  const cell = document.createElement("div");
+  cell.classList.add("cell");
+  cell.style.width = `${cellSize}%`;
+  cell.style.height = `${cellSize}%`;
+
+  return cell;
+}
+
+function fillPad(fraction) {
+  const totalCells = fraction * fraction;
 
   for (let i = 0; i < totalCells; i++) {
-    const cell = document.createElement("div");
-    cell.style.width = `${cellSize}%`;
-    cell.style.height = `${cellSize}%`;
-    cell.classList.add("cell");
-    pad.append(cell);
+    pad.append(createCell(fraction));
   }
+}
+
+function initializePad(fraction = 16) {
+  pad.textContent = "";
+  fillPad(fraction);
 }
 
 function getRandomRGB() {
@@ -26,36 +35,35 @@ function getRandomRGB() {
 }
 
 function paintCell(e) {
-  if (colorCheckbox.checked) {
-    e.target.style.backgroundColor = getRandomRGB();
-  } else {
-    e.target.style.backgroundColor = "lightgray";
-  }
+  e.target.style.backgroundColor = colorCheckbox.checked
+    ? getRandomRGB()
+    : "lightgray";
 }
 
 function getPadSize() {
   let padSize;
   do {
-    padSize = +prompt("Choose a new grid size. Something between 1 and 100.");
+    padSize = +prompt("Choose a new grid size. Between 1 and 100.");
   } while (isNaN(padSize) || padSize > 100 || padSize < 1);
 
   return padSize;
 }
 
+createButton.addEventListener("click", () => initializePad(getPadSize()));
+
+clearButton.addEventListener("click", () => {
+  const currentFraction = Math.sqrt(pad.children.length);
+  initializePad(currentFraction);
+});
+
 let isMouseDown = false;
 
 pad.addEventListener("mousedown", () => (isMouseDown = true));
 pad.addEventListener("mouseup", () => (isMouseDown = false));
-
 pad.addEventListener("mouseover", (e) => {
-  if (isMouseDown && e.target.classList.contains("cell")) paintCell(e);
+  if (isMouseDown && e.target.classList.contains("cell")) {
+    paintCell(e);
+  }
 });
 
-createButton.addEventListener("click", () => drawCells(getPadSize()));
-
-clearButton.addEventListener("click", () => {
-  const currentCells = Math.sqrt(pad.children.length);
-  drawCells(currentCells);
-});
-
-drawCells();
+initializePad();
