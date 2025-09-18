@@ -58,15 +58,17 @@ clearButton.addEventListener("click", () => {
 
 let isMouseDown = false;
 
+pad.addEventListener("dragstart", (e) => e.preventDefault());
 pad.addEventListener("mousedown", () => (isMouseDown = true));
 pad.addEventListener("mouseup", () => (isMouseDown = false));
-pad.addEventListener("dragstart", (e) => e.preventDefault());
 pad.addEventListener("mouseover", (e) => {
   if (isMouseDown && e.target.classList.contains("cell")) {
     paintCell(e);
   }
 });
 
-pad.addEventListener("dragstart", (e) => e.preventDefault());
+pad.addEventListener("mouseleave", () => {
+  isMouseDown = false;
+});
 
 initializePad();
