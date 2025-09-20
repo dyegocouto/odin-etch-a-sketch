@@ -10,6 +10,7 @@ function createCell(fraction) {
   cell.classList.add("cell");
   cell.style.width = `${cellSize}%`;
   cell.style.height = `${cellSize}%`;
+  cell.style.opacity = 0.1;
 
   return cell;
 }
@@ -34,10 +35,22 @@ function getRandomRGB() {
   return `rgb(${r}, ${g}, ${b})`;
 }
 
+function getColor() {
+  return colorCheckbox.checked ? getRandomRGB() : "black";
+}
+
 function paintCell(e) {
-  e.target.style.backgroundColor = colorCheckbox.checked
-    ? getRandomRGB()
-    : "lightgray";
+  const cell = e.target;
+
+  if (!cell.style.backgroundColor) {
+    cell.style.backgroundColor = getColor();
+    cell.style.opacity = 0.1;
+  } else {
+    const currentOpacity = parseFloat(cell.style.opacity) || 0.1;
+    if (currentOpacity < 1) {
+      cell.style.opacity = currentOpacity + 0.1;
+    }
+  }
 }
 
 function getPadSize() {
